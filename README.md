@@ -4,11 +4,7 @@ CT1 is a parametric cadquery/cqparts model of a coffeetable.
 
 ![Coffee table](ct1.jpg)
 
-<iframe
-    scrolling="no"
-    src="https://www.gntech.se/en/models/ct1/"
-    height="400px" width="100%">
-</iframe>
+Fullscreen [3D-model](https://www.gntech.se/en/models/ct1/) of the coffee table
 
 Read more about the design on my website https://www.gntech.se/en/projects/ct1/
 
