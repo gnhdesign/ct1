@@ -1,10 +1,12 @@
-Coffee table CT1 is a parametric cadquery/cqparts model of a coffeetable.
+# Coffee table CT1
+
+CT1 is a parametric cadquery/cqparts model of a coffeetable.
 
 ![Coffee table](ct1.jpg)
 
 Read more about the design on my website https://www.gntech.se/en/projects/ct1/
 
-Order your own coffee table here https://www.gnhdesign.se
+Order your own CT1 coffee table here https://www.gnhdesign.se
 
 ## How to build the model
 A prerequiste is to have FreeCAD installed.
@@ -25,5 +27,3 @@ Then you can run the script with python. The design will open in a webviewer.
 ```
 python ct1.py
 ```
-
-
