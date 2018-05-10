@@ -1,5 +1,8 @@
 Coffee table CT1 is a parametric cadquery/cqparts model of a coffeetable.
 
+Read more about the design on my website https://www.gntech.se/en/projects/ct1/
+Or order your own coffee table here https://www.gnhdesign.se
+
 A prerequiste is to have FreeCAD installed.
 
 The easiest way to build and view the model is to use the [freecad-cadquery-module](https://github.com/jmwright/cadquery-freecad-module) which can be installed through FreeCAD's Addon manager.
