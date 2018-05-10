@@ -1,5 +1,7 @@
 Coffee table CT1 is a parametric cadquery/cqparts model of a coffeetable.
 
+![Coffee table](ct1.jpg)
+
 Read more about the design on my website https://www.gntech.se/en/projects/ct1/
 
 Order your own coffee table here https://www.gnhdesign.se
