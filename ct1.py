@@ -251,9 +251,9 @@ class _Shelf(cqparts.Part):
     cx = PositiveFloat(None, doc="leg width from hole to glass corner")
 
     r3 = Float(80, doc="shelf r3")
-    s1 = Float(-30, doc="shelf s1")
+    s1 = Float(-40, doc="shelf s1")
     s2 = Float(-100, doc="shelf s2")
-    s3 = Float(25, doc="shelf s3")
+    s3 = Float(40, doc="shelf s3")
 
     _render = render_props(template='wood')
 
@@ -287,6 +287,5 @@ class _Shelf(cqparts.Part):
 
 
 table = CoffeTable()
-#display(table)
-table.exporter('gltf')('ct1.gltf')
-
+display(table)
+#table.exporter('gltf')('ct1.gltf')
