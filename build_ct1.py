@@ -19,7 +19,7 @@ from cqparts.display import display
 from ct1 import CoffeTable
 
 
-def build(table):
+def export_drawings_models(table):
     working_folder = os.path.dirname(os.path.realpath(__file__))
     dir2d = os.path.join(working_folder, "build/2d")
     dir3d = os.path.join(working_folder, "build/3d")
@@ -30,9 +30,9 @@ def build(table):
     print("Exporting part SVG 2D-views")
     if not os.path.isdir(dir2d):
         os.makedirs(dir2d)
-    table.find('leg_0').local_obj.exportSvg(os.path.join(dir2d, "ct1_leg.svg"), view_vector=(0,1,0))
-    table.find('shelf_0').local_obj.exportSvg(os.path.join(dir2d, "ct1_shelf.svg"), view_vector=(0,0,-1))
-    table.find('glass_top').local_obj.exportSvg(os.path.join(dir2d, "ct1_glass_top.svg"), view_vector=(0,0,1))
+    table.find('leg_0').local_obj.exportSvg(os.path.join(dir2d, "ct1_leg.svg"), view_vector=(0, 1, 0))
+    table.find('shelf_0').local_obj.exportSvg(os.path.join(dir2d, "ct1_shelf.svg"), view_vector=(0, 0, -1))
+    table.find('glass_top').local_obj.exportSvg(os.path.join(dir2d, "ct1_glass_top.svg"), view_vector=(0, 0, 1))
 
     print("Exporting part STEP 3D-models")
     if not os.path.isdir(dir3d):
@@ -48,9 +48,9 @@ def build(table):
 
     # Not possible with cqparts right now
     #print("Exporting assembly 2D-views")
-    #table.exporter("svg")("2d_TOP_ct1.svg", view_vector=(0,0,-1))
-    #table.exporter("svg")("2d_FRONT_ct1.svg", view_vector=(0,1,0))
-    #table.exporter("svg")("2d_LEFT_ct1.svg", view_vector=(1,0,0))
+    #table.exporter("svg")("2d_TOP_ct1.svg", view_vector=(0, 0, -1))
+    #table.exporter("svg")("2d_FRONT_ct1.svg", view_vector=(0, 1, 0))
+    #table.exporter("svg")("2d_LEFT_ct1.svg", view_vector=(1, 0, 0))
 
     # Not possible with cqparts right now
     #print("Exporting assembly 3D-model")
@@ -59,5 +59,5 @@ def build(table):
 
 table = CoffeTable()
 
-build(table)
-#display(table)
+export_drawings_models(table)
+display(table)
