@@ -18,7 +18,7 @@ import math
 import cadquery as cq
 import cqparts
 from cqparts.params import PositiveFloat, Float
-from cqparts.display import display, web_display, render_props
+from cqparts.display import render_props
 from cqparts.constraint import Fixed, Coincident, Mate
 from cqparts.utils.geometry import CoordSystem
 
@@ -106,8 +106,6 @@ class CoffeTable(cqparts.Assembly):
         self.components['glass_top'].apply_cutout(self.components['leg_2'])
         self.components['glass_top'].apply_cutout(self.components['leg_3'])
 
-        #self.components['leg_0'].local_obj.exportSvg("/home/gustav/leg_0.svg", view_vector=(0,1,0))
-
         # cut out hole in shelfs
         self.components['leg_0'].apply_cutout(self.components['shelf_0'])
         self.components['leg_0'].apply_cutout(self.components['shelf_1'])
@@ -117,8 +115,6 @@ class CoffeTable(cqparts.Assembly):
         self.components['leg_2'].apply_cutout(self.components['shelf_1'])
         self.components['leg_3'].apply_cutout(self.components['shelf_0'])
         self.components['leg_3'].apply_cutout(self.components['shelf_1'])
-
-        #self.components['shelf_0'].local_obj.exportSvg("/home/gustav/shelf_0.svg", view_vector=(0,0,-1))
 
 
 class _GlassTop(cqparts.Part):
@@ -284,8 +280,3 @@ class _Shelf(cqparts.Part):
             .edges("|Z").fillet(20).faces("|Z").edges().fillet(4) \
 
         return m
-
-
-table = CoffeTable()
-display(table)
-#table.exporter('gltf')('ct1.gltf')
