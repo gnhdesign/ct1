@@ -27,5 +27,5 @@ pip install --user cqparts
 Then you can run the script with python. The design will open in a webviewer.
 
 ```
-python ct1.py
+python build_ct1.py
 ```
