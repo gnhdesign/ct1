@@ -19,7 +19,7 @@ from cqparts.display import display
 from ct1 import CoffeTable
 
 
-def build():
+def build(table):
     working_folder = os.path.dirname(os.path.realpath(__file__))
     dir2d = os.path.join(working_folder, "build/2d")
     dir3d = os.path.join(working_folder, "build/3d")
