@@ -19,14 +19,13 @@ import os
 from cqparts.display import display
 from ct1 import CoffeTable
 
+def work_dir():
+    # This is needed for when the script is executed from within Freecad
+    return os.path.dirname(os.path.realpath(__file__))
+
 
 def export_drawings_models(table):
-    working_folder = os.path.dirname(os.path.realpath(__file__))
-    dir2d = os.path.join(working_folder, "build/2d")
-    dir3d = os.path.join(working_folder, "build/3d")
-    dirgltf = os.path.join(working_folder, "build/gltf")
-
-    print(table.tree_str(name="ct1"))
+    dir2d = os.path.join(work_dir(), "build/2d")
 
     print("Exporting part SVG 2D-views")
     if not os.path.isdir(dir2d):
@@ -35,6 +34,15 @@ def export_drawings_models(table):
     table.find('shelf_0').local_obj.exportSvg(os.path.join(dir2d, "ct1_shelf.svg"), view_vector=(0, 0, -1))
     table.find('glass_top').local_obj.exportSvg(os.path.join(dir2d, "ct1_glass_top.svg"), view_vector=(0, 0, 1))
 
+    # Not possible with cqparts right now
+    #print("Exporting assembly 2D-views")
+    #table.exporter("svg")("2d_TOP_ct1.svg", view_vector=(0, 0, -1))
+    #table.exporter("svg")("2d_FRONT_ct1.svg", view_vector=(0, 1, 0))
+    #table.exporter("svg")("2d_LEFT_ct1.svg", view_vector=(1, 0, 0))
+
+
+def export_step_models(table):
+    dir3d = os.path.join(work_dir(), "build/3d")
     print("Exporting part STEP 3D-models")
     if not os.path.isdir(dir3d):
         os.makedirs(dir3d)
@@ -42,23 +50,24 @@ def export_drawings_models(table):
     table.find('shelf_0').exporter("step")(os.path.join(dir3d, "ct1_shelf.step"))
     table.find('glass_top').exporter("step")(os.path.join(dir3d, "ct1_glass_top.step"))
 
-    print("Exporting assembly GLTF-model")
-    if not os.path.isdir(dirgltf):
-        os.makedirs(dirgltf)
-    table.exporter('gltf')(os.path.join(dirgltf, "ct1.gltf"))
-
-    # Not possible with cqparts right now
-    #print("Exporting assembly 2D-views")
-    #table.exporter("svg")("2d_TOP_ct1.svg", view_vector=(0, 0, -1))
-    #table.exporter("svg")("2d_FRONT_ct1.svg", view_vector=(0, 1, 0))
-    #table.exporter("svg")("2d_LEFT_ct1.svg", view_vector=(1, 0, 0))
-
     # Not possible with cqparts right now
     #print("Exporting assembly 3D-model")
     #table.exporter("step")("3d_ct1.step")
 
 
+def export_gltf_models(table):
+    dirgltf = os.path.join(work_dir(), "build/gltf")
+    print("Exporting assembly GLTF-model")
+    if not os.path.isdir(dirgltf):
+        os.makedirs(dirgltf)
+    table.exporter('gltf')(os.path.join(dirgltf, "ct1.gltf"))
+
+
 table = CoffeTable()
+print(table.tree_str(name="ct1"))
 
 export_drawings_models(table)
-display(table)
+export_step_models(table)
+export_gltf_models(table)
+
+#display(table)
