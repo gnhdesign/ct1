@@ -45,7 +45,7 @@ def export_drawings_models(table):
     print("Exporting assembly GLTF-model")
     if not os.path.isdir(dirgltf):
         os.makedirs(dirgltf)
-    table.exporter('gltf')(os.path.join(dir3d, "ct1.gltf"))
+    table.exporter('gltf')(os.path.join(dirgltf, "ct1.gltf"))
 
     # Not possible with cqparts right now
     #print("Exporting assembly 2D-views")
