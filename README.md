@@ -1,31 +1,25 @@
 # Coffee table CT1
 
-CT1 is a parametric cadquery/cqparts model of a coffeetable.
+CT1 is a parametric cadquery model of a coffeetable.
 
 ![Coffee table](ct1.jpg)
 
-Fullscreen [3D-model](https://www.gntech.se/en/models/ct1/) of the coffee table
+Fullscreen [3D-model](https://blog.gntech.se/en/models/ct1/) of the coffee table
 
-Read more about the design on my website https://www.gntech.se/en/projects/ct1/
-
-Order your own CT1 coffee table here https://www.gnhdesign.se
+Read more about the design on my website https://blog.gntech.se/en/projects/ct1/
 
 ## How to build the model
-A prerequiste is to have FreeCAD installed.
 
-The easiest way to build and view the model is to use the [freecad-cadquery-module](https://github.com/jmwright/cadquery-freecad-module) which can be installed through FreeCAD's Addon manager.
+To run the model from command line you can install cadquery using pip in an venv.
 
-Then you open the script in the cadquery-menu and press F2 to build.
-
-Alternatively you can build the model from commandline, first you need to install [cadquery](https://github.com/dcowden/cadquery) and [cqparts](https://github.com/fragmuffin/cqparts).
-
-```
-pip install --user cadquery
-pip install --user cqparts
+``` bash
+python3 -m venv cadquery-venv
+source cadquery-venv/bin/activate
+pip install cadquery
+python ct1.py
 ```
 
-Then you can run the script with python. The design will open in a webviewer.
+Or use the CQ-editor that has cadquery included.
 
-```
-python build_ct1.py
-```
+See instructions here [Install cadquery](https://cadquery.readthedocs.io/en/latest/installation.html)
+
