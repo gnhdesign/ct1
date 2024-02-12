@@ -19,7 +19,7 @@ import os
 import cadquery as cq
 
 
-def make_coffe_table():
+def make_coffee_table():
     if not os.path.exists("build"):
         os.makedirs("build")
 
@@ -62,6 +62,7 @@ def make_coffe_table():
         show_object(table)
     except NameError:
         print("show_object only exists when running in CQ-editor")
+
 
 def make_glass_top(length, width, t):
 	return cq.Workplane('XY', origin=(0, 0, -t)) \
@@ -170,4 +171,4 @@ def make_shelf(length, width, shelf_t, cx, ins_d, ins_l, leg_t):
 
     return m
 
-make_coffe_table()
+make_coffee_table()
