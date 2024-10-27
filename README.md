@@ -13,13 +13,16 @@ Read more about the design on my website https://blog.gntech.se/en/projects/ct1/
 To run the model from command line you can install cadquery using pip in an venv.
 
 ``` bash
-python3 -m venv cadquery-venv
-source cadquery-venv/bin/activate
-pip install cadquery
-python ct1.py
+./setup-toolchain.sh
 ```
 
-Or use the CQ-editor that has cadquery included.
+The run the ct1.py script from the terminal.
+
+``` bash
+./ct1.py
+```
+
+Or open `ct1.py` in the CQ-editor that has cadquery included.
 
 See instructions here [Install cadquery](https://cadquery.readthedocs.io/en/latest/installation.html)
 

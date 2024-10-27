@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!.venv/bin/python3
 # -*- coding: utf-8 -*-
 
 """
@@ -55,7 +55,7 @@ def make_coffee_table():
                 .add(leg, loc=cq.Location((-length/2, width/2, height), (0, 0, 1), -45), name="leg 4", color=cq.Color("brown")) \
                 .add(shelf, loc=cq.Location((0, 0, height_1), (1, 0, 0), 0),name="upper shelf", color=cq.Color("brown")) \
                 .add(shelf, loc=cq.Location((0, 0, height_2 - shelf_t), (1, 0, 0), 180),name="lower shelf", color=cq.Color("brown"))
-    table.save("build/ct1.step")
+    table.export("build/ct1.step")
 
     # Dont show_object
     try:
