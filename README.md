@@ -51,10 +51,13 @@ a STEP file, a render and DXF profiles.
 
 - `sc.py` is a small client for the SolidCraft MCP server. It can also be used from the
   command line, e.g. `python sc.py list_commands '{"filter": "sketch"}'`.
-  Set `SOLIDCRAFT_CLI` if `solidcraft-cli.exe` is not in `C:\Program\SolidCraft`.
+  It finds `solidcraft-cli` on the `PATH` or in the standard install folder; set `SOLIDCRAFT_CLI`
+  to its full path if it is installed somewhere else.
 - `ct1_solidcraft.py` builds CT1 as in `ct1.py`: one leg component placed four times and one
   shelf component placed twice. Other sizes can be built with `--length` and `--width`.
-  SolidCraft 0.12 cannot round the curved edges of the legs, so that step from `ct1.py` is left out.
+  It needs SolidCraft 0.14 or later to round the edges of the legs. The only difference from
+  `ct1.py` is the shallow curve between the shelves, which is left sharp because SolidCraft
+  can't fit the 7 mm round between the 3 mm faces on either side of it.
 
 ## CT3, a flat-pack table for CNC routing
 

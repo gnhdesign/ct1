@@ -13,12 +13,30 @@ Usage from Python:
 
 import json
 import os
+import shutil
 import subprocess
 import sys
 
-CLI = os.environ.get("SOLIDCRAFT_CLI", r"C:\Program\SolidCraft\solidcraft-cli.exe")
+CLI = (os.environ.get("SOLIDCRAFT_CLI") or shutil.which("solidcraft-cli")
+       or os.path.join(os.environ.get("ProgramFiles", r"C:\Program Files"), "SolidCraft", "solidcraft-cli.exe"))
 ADDR = os.environ.get("SOLIDCRAFT_ADDR", "127.0.0.1:7878")
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+
+def control_env(addr):
+    """Environment with the app's control token (SolidCraft 0.14+ requires one).
+
+    The app writes it to %LOCALAPPDATA%\\SolidCraft\\control\\<port>.token; passing it
+    in the environment keeps it off the command line.
+    """
+    env = dict(os.environ)
+    if "SOLIDCRAFT_CONTROL_TOKEN" not in env:
+        port = addr.rsplit(":", 1)[-1]
+        path = os.path.join(os.environ.get("LOCALAPPDATA", ""), "SolidCraft", "control", f"{port}.token")
+        if os.path.isfile(path):
+            with open(path, encoding="utf-8") as f:
+                env["SOLIDCRAFT_CONTROL_TOKEN"] = f.read().strip()
+    return env
 
 
 class Session:
@@ -29,6 +47,7 @@ class Session:
         self.proc = subprocess.Popen(
             args, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
             stderr=subprocess.DEVNULL, text=True, encoding="utf-8", bufsize=1,
+            env=control_env(addr),
         )
         self._id = 0
         self._rpc("initialize", {

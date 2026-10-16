@@ -13,7 +13,6 @@
     Copyright 2018 Gustav Näslund, CERN OHL v.1.2 (see ct1.py)
 """
 
-import json
 import math
 import os
 import sys
@@ -68,6 +67,30 @@ def fillet(s, body, edges, radius):
     except RuntimeError as e:
         print(f"  fillet r{radius} did not fit exactly, reducing: {str(e)[:200]}")
         return s.execute("solid.fillet", body=body, edges=edges, radius=radius, fit="reduce")
+
+
+def is_curved(edge):
+    """True if a body_topology edge is not a straight line."""
+    chord_mid = [(a + b) / 2 for a, b in zip(edge["start"], edge["end"])]
+    return math.dist(chord_mid, edge["mid"]) > 1e-3
+
+
+def round_leg_outline(s, P):
+    """ct1.py's edges("%CIRCLE").fillet(7) on the leg (needs SolidCraft 0.14+).
+
+    Like OCCT, SolidCraft carries the fillet on along edges tangent to the selected
+    ones, so selecting the curved edges also rounds the straight runs between them.
+
+    The shallow arc on the tenon (p6-p7) sits between two 3 mm faces. OCCT lets the
+    blend spill over them, but SolidCraft only fits 0.6 mm there, so that arc is
+    left sharp.
+    """
+    face_edges = [e for e in s.call("body_topology", body="leg")["edges"]
+                  if abs(abs(e["start"][1]) - LEG_T / 2) < 1e-6 and abs(abs(e["end"][1]) - LEG_T / 2) < 1e-6]
+    tenon_arc = lambda e: abs(e["mid"][0] - P["p6"][0]) < 10 and P["p7"][1] < e["mid"][2] < P["p6"][1]
+    edges = [e["mid"] for e in face_edges if is_curved(e) and not tenon_arc(e)]
+    print(f"  rounding {len(edges)} curved outline edges r7")
+    s.execute("solid.fillet", body="leg", edges=edges, radius=7)
 
 
 def draw_profile(s, start, segments):
@@ -156,8 +179,7 @@ def stage_leg(s):
     for (x, z), r in [(P["p14"], 100), (P["p2"], 20), (P["p3"], 8), (P["p10"], 8), (P["p11"], 20)]:
         fillet(s, "leg", [[x, 0, z]], r)
 
-    # ct1.py also rounds the curved outline edges with r7 (edges("%CIRCLE")), but
-    # SolidCraft 0.12 can only blend straight edges, so that step is left out.
+    round_leg_outline(s, P)
 
     # Recess for the glass: a square turned 45 degrees around the hole axis
     recess_half_diag = CX + CL_SIDE
@@ -282,7 +304,17 @@ def stage_finish(s):
     s.call("export", path=out(".step"), format="step")
     s.call("screenshot", path=out("_render.png"), view="iso",
            width=1600, height=1000)
-    print(json.dumps(s.execute("inspect.interference"), indent=1)[:2000])
+    try:
+        r = s.execute("inspect.interference")
+    except RuntimeError as e:
+        # The rounded legs make this slow; the MCP call can time out before the app finishes
+        print(f"  interference check did not finish: {str(e)[:120]}")
+        return
+    print(f"  interference: {r.get('count')} clashes in {r.get('checked')} pairs")
+    for i in r.get("interferences", []):
+        print(f"    {i['a']} | {i['b']}: {i['volume_mm3']:.1f} mm3")
+    for u in r.get("unchecked", []):
+        print(f"    unchecked: {u['a']} | {u['b']}")
 
 
 STAGES = {
